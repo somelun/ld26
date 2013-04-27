@@ -5,8 +5,9 @@ var GameLayer = cc.Layer.extend({
     walls:null,
     hero:null,
     sky:null,
-    baloons:null,
     b:null,
+    time:0,
+    hud:null,
 
     init:function () {
 
@@ -25,15 +26,20 @@ var GameLayer = cc.Layer.extend({
 
         this.hero = new Hero();
         this.hero.initWithSpriteFrameName("duck_1.png");
-        this.hero.setPosition(cc.p(130, 400));
+        this.hero.setPosition(cc.p(130, 300));
         this.addChild(this.hero, 1);
         this.hero.initPlayerAnimation();
 
         this.b = new Baloon();
         this.b.initWithSpriteFrameName("baloon_1.png");
         this.b.setPosition(cc.p(130, 400));
-        this.addChild(this.b, 1);
+        this.addChild(this.b, 10);
         this.b.initPlayerAnimation();
+
+        var s = cc.Sprite.create();
+        s.initWithSpriteFrameName("sun.png");
+        s.setPosition(cc.p(380, 600));
+        this.addChild(s, 2);
 
         this.setKeyboardEnabled(true);
 
@@ -43,6 +49,9 @@ var GameLayer = cc.Layer.extend({
     },
 
     update:function(dt) {
+    	this.time += dt;	//level complete time
+    	this.hud.label.setString("" + Number(this.time).toFixed(2));
+
         this.hero.update(dt);
         this.checkForAndResolveCollisions(this.hero);
         this.setViewpointCenter(this.hero.getPosition());
@@ -262,6 +271,11 @@ var GameScene = cc.Scene.extend({
         var layer = new GameLayer();
         layer.init();
         this.addChild(layer);
+
+        var hud = new HudLayer();
+        hud.init();
+        this.addChild(hud);
+        layer.hud = hud;
 
     }
 });

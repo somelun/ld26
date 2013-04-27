@@ -49,8 +49,7 @@ var Hero = cc.Sprite.extend({
     },
 
     stopPlayerAnimation:function () {
-        if(this._isAnimationStarted == true)
-        {
+        if(this._isAnimationStarted == true) {
             this.stopAllActions();
             this._isAnimationStarted = false;
         }
