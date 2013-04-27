@@ -1,3 +1,7 @@
+var kStop = 0;
+var kMoveRight = 1;
+var kMoveLeft = 2;
+
 var Hero = cc.Sprite.extend({
 	velocity:0,
 

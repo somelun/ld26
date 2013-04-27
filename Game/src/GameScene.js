@@ -5,7 +5,7 @@ var GameLayer = cc.Layer.extend({
 	init:function() {
 		this._super();
 
-		var sky = cc.LayerColor.create(cc.c4(255, 174, 60, 255));
+		var sky = cc.LayerColor.create(cc.c4(49, 162, 238, 255));
         this.addChild(sky, -1);
 
         this.map = cc.TMXTiledMap.create(s_map_plist);
@@ -23,11 +23,11 @@ var GameLayer = cc.Layer.extend({
 	onKeyDown:function(keyCode) {
 		switch(keyCode) {
 			case cc.KEY.right: {
-				//
+				this.hero.movementType = kRightMove;
 				break;
 			}
 			case cc.KEY.left: {
-				//
+				this.hero.movementType = kLeftMove;
 				break;
 			}
 			case cc.KEY.space: {
@@ -44,11 +44,11 @@ var GameLayer = cc.Layer.extend({
 	onKeyUp:function() {
 		switch(keyCode) {
 			case cc.KEY.right: {
-				//
+				this.hero.movementType = kStop;
 				break;
 			}
 			case cc.KEY.left: {
-				//
+				this.hero.movementType = kStop;
 				break;
 			}
 			case cc.KEY.space: {

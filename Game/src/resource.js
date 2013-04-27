@@ -1,5 +1,5 @@
 //image
-var s_map = "Game/res/tileSet.png";
+var s_map = "Game/res/tiles.png";
 
 //plist
 var s_map_plist = "Game/res/level.tmx";
