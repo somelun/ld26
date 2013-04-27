@@ -4,6 +4,7 @@ var GameLayer = cc.Layer.extend({
     map:null,
     walls:null,
     hero:null,
+    sky:null,
 
     init:function () {
 
@@ -12,7 +13,7 @@ var GameLayer = cc.Layer.extend({
 		var cache = cc.SpriteFrameCache.getInstance();
         cache.addSpriteFrames(s_objects_plist);
 
-		var sky = cc.LayerColor.create(cc.c4(49, 162, 238, 255));
+		var sky = cc.LayerColor.create(cc.c4(49, 162, 238, 255), 2560, 640);
         this.addChild(sky, -1);
 
         this.map = cc.TMXTiledMap.create(s_map_plist);
@@ -36,6 +37,7 @@ var GameLayer = cc.Layer.extend({
     update:function(dt) {
         this.hero.update(dt);
         this.checkForAndResolveCollisions(this.hero);
+        this.setViewpointCenter(this.hero.getPosition());
     },
 
     //keys
@@ -219,6 +221,24 @@ var GameLayer = cc.Layer.extend({
             }  
         }
         p.setPosition(p.desiredPosition);
+    },
+
+    setViewpointCenter:function (position) {
+        // if(gameOver) {
+        //     return;
+        // }
+        var winSize = cc.Director.getInstance().getWinSize();
+    
+        var x = Math.max(position.x, winSize.width / 2);
+        var y = Math.max(position.y, winSize.height / 2);
+        x = Math.min(x, (this.map.getMapSize().width * this.map.getTileSize().width) - winSize.width / 2);
+        y = Math.min(y, (this.map.getMapSize().height * this.map.getTileSize().height) - winSize.height/2);
+        var actualPosition = cc.PointMake(x, y);
+    
+        var centerOfView = cc.PointMake(winSize.width/2, winSize.height/2);
+        var viewPoint = cc.pSub(centerOfView, actualPosition);
+
+        this.setPosition(viewPoint);
     },
 
 });
