@@ -5,6 +5,12 @@ var GameLayer = cc.Layer.extend({
 	init:function() {
 		this._super();
 
+		var sky = cc.LayerColor.create(cc.c4(255, 174, 60, 255));
+        this.addChild(sky, -1);
+
+        this.map = cc.TMXTiledMap.create(s_map_plist);
+        this.addChild(this.map, 0, 123);
+
 		this.schedule(this.update);
 
 		return true;

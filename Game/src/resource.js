@@ -1,1 +1,15 @@
-var g_ressources = [];
+//image
+var s_map = "Game/res/tileSet.png";
+
+//plist
+var s_map_plist = "Game/res/level.tmx";
+
+var g_ressources = [
+	//image
+	{type:"image", src:s_map},
+
+	//plist
+
+	//tmx
+	{type:"tmx", src:s_map_plist},
+];
