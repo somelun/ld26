@@ -40,7 +40,8 @@
         appFiles:[
             'Game/src/resource.js',
             'Game/src/GameScene.js',
-            'Game/src/Hero.js'
+            'Game/src/Hero.js',
+            'Game/src/Baloon.js',
         ]
     };
 

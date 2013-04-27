@@ -26,7 +26,7 @@ var Hero = cc.Sprite.extend({
         var frame0 = cc.SpriteFrameCache.getInstance().getSpriteFrame("duck_1.png");
         var frame1 = cc.SpriteFrameCache.getInstance().getSpriteFrame("duck_2.png");
         var frame2 = cc.SpriteFrameCache.getInstance().getSpriteFrame("duck_3.png");
-        var frame3 = cc.SpriteFrameCache.getInstance().getSpriteFrame("duck_4.png");
+        var frame3 = cc.SpriteFrameCache.getInstance().getSpriteFrame("duck_4.png");       
 
         animFrames.push(frame0);
         animFrames.push(frame1);

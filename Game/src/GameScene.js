@@ -5,6 +5,8 @@ var GameLayer = cc.Layer.extend({
     walls:null,
     hero:null,
     sky:null,
+    baloons:null,
+    b:null,
 
     init:function () {
 
@@ -27,6 +29,12 @@ var GameLayer = cc.Layer.extend({
         this.addChild(this.hero, 1);
         this.hero.initPlayerAnimation();
 
+        this.b = new Baloon();
+        this.b.initWithSpriteFrameName("baloon_1.png");
+        this.b.setPosition(cc.p(130, 400));
+        this.addChild(this.b, 1);
+        this.b.initPlayerAnimation();
+
         this.setKeyboardEnabled(true);
 
 		this.schedule(this.update);
@@ -38,6 +46,10 @@ var GameLayer = cc.Layer.extend({
         this.hero.update(dt);
         this.checkForAndResolveCollisions(this.hero);
         this.setViewpointCenter(this.hero.getPosition());
+
+        if (!this.b._isMoveActivated) {
+        	this.b.runBezier();
+        }
     },
 
     //keys
@@ -253,4 +265,3 @@ var GameScene = cc.Scene.extend({
 
     }
 });
-
