@@ -6,7 +6,7 @@ var SplashLayer = cc.Layer.extend({
 
 		var s = cc.Sprite.create(s_splash);
 		s.setAnchorPoint(cc.PointMake(0.0, 0.0));
-		s.setPosition(480, 320);
+		// s.setPosition(480, 320);
 		this.addChild(s);
 
 		var start_n = cc.Sprite.create(s_start_n);

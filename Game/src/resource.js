@@ -4,6 +4,7 @@ var s_objects = "Game/res/objects.png";
 var s_splash = "Game/res/splash.png";
 var s_start_n = "Game/res/start_n.png";
 var s_start_s = "Game/res/start_s.png";
+var s_end = "Game/res/end.png";
 
 //plist
 var s_objects_plist = "Game/res/objects.plist";
@@ -25,6 +26,8 @@ var g_ressources = [
 	{type:"image", src:s_objects},
 	{type:"image", src:s_start_n},
 	{type:"image", src:s_start_s},
+	{type:"image", src:s_splash},
+	{type:"image", src:s_end},
 
 	//plist
 	{type:"plist", src:s_objects_plist},

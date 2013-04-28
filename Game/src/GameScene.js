@@ -9,6 +9,8 @@ var GameLayer = cc.Layer.extend({
     bullet:null,
     time:0,
     hud:null,
+    balloonIsBoom:false,
+    timeBoom:0,
 
     init:function () {
 
@@ -57,9 +59,6 @@ var GameLayer = cc.Layer.extend({
     },
 
     update:function(dt) {
-    	this.time += dt;	//level complete time
-    	this.hud.label.setString("" + Number(this.time).toFixed(2));
-
         this.hero.update(dt);
         this.checkForAndResolveCollisions(this.hero);
         this.setViewpointCenter(this.hero.getPosition());
@@ -79,6 +78,7 @@ var GameLayer = cc.Layer.extend({
         		this.baloon.playBoomAnimation();
         		this.runAction(cc.Sequence.create(cc.DelayTime.create(0.4), cc.CallFunc.create(this.removeBaloon, this)));
     			this.bullet = null;
+    			this.balloonIsBoom = true;
     			return;
         	}
 
@@ -105,16 +105,33 @@ var GameLayer = cc.Layer.extend({
 
         }
 
-        //baloon and hero
-        var baloonRect = cc.RectMake(this.baloon.getPosition().x, this.baloon.getPosition().y, this.baloon.getContentSize().width, this.baloon.getContentSize().height);
-        var heroRect = cc.RectMake(this.hero.getPosition().x, this.hero.getPosition().y, this.hero.getContentSize().width, this.hero.getContentSize().height);
-        intersection = cc.rectIntersection(baloonRect, heroRect);
-        if (intersection.size.width > 0 && intersection.size.height > 0) {
-        		// cc.AudioEngine.getInstance().playEffect(s_expl);
-    			this.removeChildByTag(700); 
-    			return;
+       //  //baloon and hero
+       //  var baloonRect = cc.RectMake(this.baloon.getPosition().x, this.baloon.getPosition().y, this.baloon.getContentSize().width, this.baloon.getContentSize().height);
+       //  var heroRect = cc.RectMake(this.hero.getPosition().x, this.hero.getPosition().y, this.hero.getContentSize().width, this.hero.getContentSize().height);
+       //  intersection = cc.rectIntersection(baloonRect, heroRect);
+       //  if (intersection.size.width > 0 && intersection.size.height > 0) {
+       //  		// cc.AudioEngine.getInstance().playEffect(s_expl);
+    			// this.removeChildByTag(700); 
+    			// return;
+       //  }
+
+        if (this.balloonIsBoom) {
+       		this.timeBoom +=dt;
+        } else {
+        	this.time += dt;	//level complete time
+	    	this.hud.label.setString("" + Number(this.time).toFixed(2));
         }
 
+       	if (this.timeBoom > 2) {
+       		this.showGameOver();
+       	}
+
+    },
+
+    showGameOver:function() {
+    	var scene = cc.Scene.create();
+        scene.addChild(EndLayer.create());
+        cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
     },
 
     removeBaloon:function() {
