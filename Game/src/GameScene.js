@@ -16,7 +16,7 @@ var GameLayer = cc.Layer.extend({
 
         this._super();
 
-        // cc.AudioEngine.getInstance().playMusic(s_song, true);
+        cc.AudioEngine.getInstance().playMusic(s_song, true);
 
 		var cache = cc.SpriteFrameCache.getInstance();
         cache.addSpriteFrames(s_objects_plist);
@@ -82,26 +82,26 @@ var GameLayer = cc.Layer.extend({
     			return;
         	}
 
-        // 	//bullet and hero
-        // 	var heroRect = cc.RectMake(this.hero.getPosition().x, this.hero.getPosition().y, this.hero.getContentSize().width, this.hero.getContentSize().height);
-        // 	intersection = cc.rectIntersection(bulletRect, heroRect);
-        // 	if (intersection.size.width > 0 && intersection.size.height > 0) {
-        // 		if (this.bullet.state == kShoot) {
+        	//bullet and hero
+        	var heroRect = cc.RectMake(this.hero.getPosition().x, this.hero.getPosition().y, this.hero.getContentSize().width, this.hero.getContentSize().height);
+        	intersection = cc.rectIntersection(bulletRect, heroRect);
+        	if (intersection.size.width > 0 && intersection.size.height > 0) {
+        		if (this.bullet.state == kShoot) {
         // 			cc.AudioEngine.getInstance().playEffect(s_expl);
 	    			// this.removeChildByTag(700);
 	    			// this.bullet = null;
 	    			// return;
-        // 		} else if (this.bullet.state == kOnTheStage) {
-        // 			var b = this.bullet;
-        // 			this.removeChildByTag(500);
-        // 			this.bullet = null;
-        // 			this.hero.removeAllChildrenWithCleanup(true);
-        // 			this.hero.addChild(b, 10, 500);
-        // 			b.setPosition(cc.p(30, 5));
-        // 			this.hero.isBulletСharged = true;
-        // 			return;
-        // 		}
-        // 	}
+        		} else if (this.bullet.state == kOnTheStage) {
+        			var b = this.bullet;
+        			this.removeChildByTag(500);
+        			this.bullet = null;
+        			this.hero.removeAllChildrenWithCleanup(true);
+        			this.hero.addChild(b, 10, 500);
+        			b.setPosition(cc.p(30, 5));
+        			this.hero.isBulletСharged = true;
+        			return;
+        		}
+        	}
 
         }
 
