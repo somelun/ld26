@@ -8,6 +8,8 @@ var Hero = cc.Sprite.extend({
 	onGround:false,
 	mightAsWellJump:null,
 	moveType:null,
+	lastMoveType:null,
+	isBulletСharged:true,
 	_flyAnimation:null,
 	_isAnimationStarted:null,
 
@@ -76,11 +78,19 @@ var Hero = cc.Sprite.extend({
             var forwardStep = cc.pMult(forwardMove, dt);
             this.velocity = cc.pAdd(this.velocity, forwardStep);
             this.setFlipX(false);
+            if (this.isBulletСharged) {
+            	var b = this.getChildByTag(500);
+            	b.setFlipX(false);
+            }
         } else if (this.moveType == kMoveLeft) {
             var forwardMove = cc.PointMake(-800.0, 0.0);
             var forwardStep = cc.pMult(forwardMove, dt);
             this.velocity = cc.pAdd(this.velocity, forwardStep);
             this.setFlipX(true);
+            if (this.isBulletСharged) {
+            	var b = this.getChildByTag(500);
+            	b.setFlipX(true);
+            }
         }
 
         var minMovement = cc.PointMake(-120.0, -450.0);

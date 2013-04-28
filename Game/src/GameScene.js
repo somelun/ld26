@@ -40,7 +40,7 @@ var GameLayer = cc.Layer.extend({
         this.bullet = new Bullet();
         this.bullet.initWithSpriteFrameName("bullet.png");
         this.bullet.setPosition(cc.p(30, 5));
-        this.hero.addChild(this.bullet, 10);
+        this.hero.addChild(this.bullet, 10, 500);
 
         var s = cc.Sprite.create();
         s.initWithSpriteFrameName("sun.png");
@@ -65,6 +65,14 @@ var GameLayer = cc.Layer.extend({
         if (!this.baloon._isMoveActivated) {
         	this.baloon.runBezier();
         }
+
+        // if (this.hero.isBulletСharged) {
+        // 	//nothing but the blues
+        // } else {
+        // 	var b = this.getChildByTag(500);
+        // 	var intersection = cc.rectIntersection(b.collisionBoundingBox(), this.hero.collisionBoundingBox());
+        // 	cc.log("x = " + intersection.x);
+        // }
     },
 
     //keys
@@ -72,10 +80,12 @@ var GameLayer = cc.Layer.extend({
         switch(keyCode) {
             case cc.KEY.right: {
                 this.hero.moveType = kMoveRight;
+                this.hero.lastMoveType = kMoveRight;
                 break;
             }
             case cc.KEY.left: {
                 this.hero.moveType = kMoveLeft;
+                this.hero.lastMoveType = kMoveLeft;
                 break;
             }
             case cc.KEY.space: {
@@ -83,7 +93,7 @@ var GameLayer = cc.Layer.extend({
                 break;
             }
             case cc.KEY.x: {
-                //fire?
+                this.fire();
             }
             default:
                 break;
@@ -105,7 +115,7 @@ var GameLayer = cc.Layer.extend({
                 break;
             }
             case cc.KEY.x: {
-                //fire?
+            	//
             }
             default:
                 break;
@@ -205,43 +215,106 @@ var GameLayer = cc.Layer.extend({
                     var intersection = cc.rectIntersection(pRect, tileRect);
                     var tileIndx = cc.ArrayGetIndexOfObject(tiles, dic);
 
-                    if (tileIndx == 0) {
+                    if (tileIndx == 0 && p.velocity.y <= 0) {
                         //tile is directly below player
                         p.desiredPosition = cc.PointMake(p.desiredPosition.x, p.desiredPosition.y + intersection.size.height);
                         p.velocity = cc.PointMake(p.velocity.x, 0.0);
                         p.onGround = true;
-                    } else if (tileIndx == 1) {
+                    } else if (tileIndx == 1 && p.velocity.y >= 0) {
                         //tile is directly above player
                         p.desiredPosition = cc.PointMake(p.desiredPosition.x, p.desiredPosition.y - intersection.size.height);
                         p.velocity = cc.PointMake(p.velocity.x, 0.0);
-                    } else if (tileIndx == 2) {
+                    } else if (tileIndx == 2 && p.velocity.x <= 0) {
                         //tile is left of player
                         p.desiredPosition = cc.PointMake(p.desiredPosition.x + intersection.size.width, p.desiredPosition.y);
-                    } else if (tileIndx == 3) {
+                        p.velocity = cc.PointMake(0.0, p.velocity.y);
+                    } else if (tileIndx == 3 && p.velocity.x >= 0) {
                         //tile is right of player
                         p.desiredPosition = cc.PointMake(p.desiredPosition.x - intersection.size.width, p.desiredPosition.y);
-                    } else {
-                        if (intersection.size.width > intersection.size.height) {
-                            //tile is diagonal, but resolving collision vertially
+                        p.velocity = cc.PointMake(0.0, p.velocity.y);
+                    } else if (tileIndx == 6) {
+                    	//tile is left bottom of player
+                        var objLeft = tiles[2];
+                        var gidLeft = parseInt(objLeft["gid"]);
+                        if(gidLeft  && p.velocity.x <= 0) {
+                            p.desiredPosition = cc.PointMake(p.desiredPosition.x + intersection.size.width, p.desiredPosition.y);
+                            p.velocity = cc.PointMake(0.0, p.velocity.y);
+                        }
+
+                        var objBottom = tiles[0];
+                        var gidBottom = parseInt(objBottom["gid"]);
+                        if(gidBottom  && p.velocity.y <= 0) {
+                            p.desiredPosition = cc.PointMake(p.desiredPosition.x, p.desiredPosition.y + intersection.size.height);
                             p.velocity = cc.PointMake(p.velocity.x, 0.0);
-                            var resolutionHeight;
-                            if (tileIndx > 5) {
-                                resolutionHeight = -intersection.size.height;
-                                p.onGround = true;
-                            } else {
-                                resolutionHeight = intersection.size.height;
-                            }                        
-                            p.desiredPosition = cc.PointMake(p.desiredPosition.x, p.desiredPosition.y + resolutionHeight);
-                        } else {
-                            var resolutionWidth;
-                            if (tileIndx == 6 || tileIndx == 4) {
-                                resolutionWidth = intersection.size.width;
-                            } else {
-                                resolutionWidth = -intersection.size.width;
-                            }
-                            p.desiredPosition = cc.PointMake(p.desiredPosition.x + resolutionWidth , p.desiredPosition.y);
+                        }
+                    } else if (tileIndx == 7) {
+                        //tile is right bottom of player
+                        var objRight = tiles[3];
+                        var gidRight = parseInt(objRight["gid"]);
+                        if(gidRight  && p.velocity.x >= 0) {
+                            p.desiredPosition = cc.PointMake(p.desiredPosition.x - intersection.size.width, p.desiredPosition.y);
+                            p.velocity = cc.PointMake(0.0, p.velocity.y);
+                        }
+ 
+                        var objBottom = tiles[0];
+                        var gidBottom = parseInt(objBottom["gid"]);
+                        if(gidBottom  && p.velocity.y <= 0) {
+                            p.desiredPosition = cc.PointMake(p.desiredPosition.x, p.desiredPosition.y + intersection.size.height);
+                            p.velocity = cc.PointMake(p.velocity.x, 0.0);
+                        }
+                    } else if (tileIndx == 4) {
+                        //tile is left above of player
+                        var objLeft = tiles[4];
+                        var gidLeft = parseInt(objLeft["gid"]);
+                        if(gidLeft  && p.velocity.x <= 0) {
+                            p.desiredPosition = cc.PointMake(p.desiredPosition.x + intersection.size.width, p.desiredPosition.y);
+                            p.velocity = cc.PointMake(0.0, p.velocity.y);
+                        }
+
+                        var objAbove = tiles[1];
+                        var gidAbove = parseInt(objAbove["gid"]);
+                        if(gidAbove  && p.velocity.y >= 0) {
+                            p.desiredPosition = cc.PointMake(p.desiredPosition.x, p.desiredPosition.y - intersection.size.height);
+                            p.velocity = cc.PointMake(p.velocity.x, 0.0);
+                        }
+                    } else if (tileIndx == 5) {
+                        //tile is right above of player
+                        var objRight = tiles[3];
+                        var gidRight = parseInt(objRight["gid"]);
+                        if(gidRight  && p.velocity.x >= 0) {
+                            p.desiredPosition = cc.PointMake(p.desiredPosition.x - intersection.size.width, p.desiredPosition.y);
+                            p.velocity = cc.PointMake(0.0, p.velocity.y);
+                        }
+
+                        var objAbove = tiles[1];
+                        var gidAbove = parseInt(objAbove["gid"]);
+                        if(gidAbove  && p.velocity.y >= 0) {
+                            p.desiredPosition = cc.PointMake(p.desiredPosition.x, p.desiredPosition.y - intersection.size.height);
+                            p.velocity = cc.PointMake(p.velocity.x, 0.0);
                         }
                     }
+                    // } else {
+                    //     if (intersection.size.width > intersection.size.height) {
+                    //         //tile is diagonal, but resolving collision vertially
+                    //         p.velocity = cc.PointMake(p.velocity.x, 0.0);
+                    //         var resolutionHeight;
+                    //         if (tileIndx > 5) {
+                    //             resolutionHeight = -intersection.size.height;
+                    //             p.onGround = true;
+                    //         } else {
+                    //             resolutionHeight = intersection.size.height;
+                    //         }                        
+                    //         p.desiredPosition = cc.PointMake(p.desiredPosition.x, p.desiredPosition.y + resolutionHeight);
+                    //     } else {
+                    //         var resolutionWidth;
+                    //         if (tileIndx == 6 || tileIndx == 4) {
+                    //             resolutionWidth = intersection.size.width;
+                    //         } else {
+                    //             resolutionWidth = -intersection.size.width;
+                    //         }
+                    //         p.desiredPosition = cc.PointMake(p.desiredPosition.x + resolutionWidth , p.desiredPosition.y);
+                    //     }
+                    // }
   
                 }
 
@@ -266,6 +339,39 @@ var GameLayer = cc.Layer.extend({
         var viewPoint = cc.pSub(centerOfView, actualPosition);
 
         this.setPosition(viewPoint);
+    },
+
+    fire:function() {
+    	if (this.hero.isBulletСharged) {
+    		this.hero.isBulletСharged = false;
+    		var b = this.hero.getChildByTag(500);
+    		var p = cc.PointMake(this.hero.getPosition().x - 3, this.hero.getPosition().y - 28);
+    		b.setPosition(p);
+    		this.hero.removeChildByTag(500, true);
+    		this.addChild(b, 1, 500);
+
+    		var shootPoint;
+    		switch(this.hero.lastMoveType) {
+    			case kMoveRight: {
+    				shootPoint = cc.PointMake(2570, p.y);
+    				break;
+    			}
+    			case kMoveLeft: {
+    				shootPoint = cc.PointMake(-10, p.y);
+    				break;
+    			}
+    		}
+
+    		var d = cc.pDistance(p, shootPoint);
+    		var time = d / 200;
+    		b.runAction(cc.Sequence.create(cc.MoveTo.create(time, shootPoint), cc.CallFunc.create(this.createNewBullet, this)));
+    	}
+    },
+
+    createNewBullet:function() {
+    	var b = this.getChildByTag(500);
+    	b.setPosition(cc.p(100, 100));
+    	b.state = kOnTheStage;
     },
 
 });
