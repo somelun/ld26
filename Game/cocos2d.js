@@ -44,6 +44,7 @@
             'Game/src/Baloon.js',
             'Game/src/HUD.js',
             'Game/src/Bullet.js',
+            'Game/src/Splash.js',
         ]
     };
 

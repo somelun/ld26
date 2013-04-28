@@ -14,6 +14,8 @@ var GameLayer = cc.Layer.extend({
 
         this._super();
 
+        // cc.AudioEngine.getInstance().playMusic(s_song, true);
+
 		var cache = cc.SpriteFrameCache.getInstance();
         cache.addSpriteFrames(s_objects_plist);
 
@@ -70,8 +72,9 @@ var GameLayer = cc.Layer.extend({
         // 	//nothing but the blues
         // } else {
         // 	var b = this.getChildByTag(500);
-        // 	var intersection = cc.rectIntersection(b.collisionBoundingBox(), this.hero.collisionBoundingBox());
-        // 	cc.log("x = " + intersection.x);
+        // 	var r = this.hero.collisionBoundingBox();
+        // 	// var intersection = cc.rectIntersb.ection(b.collisionBoundingBox(), this.hero.collisionBoundingBox());
+        // 	// cc.log("x = " + intersection.x);
         // }
     },
 
@@ -293,31 +296,7 @@ var GameLayer = cc.Layer.extend({
                             p.velocity = cc.PointMake(p.velocity.x, 0.0);
                         }
                     }
-                    // } else {
-                    //     if (intersection.size.width > intersection.size.height) {
-                    //         //tile is diagonal, but resolving collision vertially
-                    //         p.velocity = cc.PointMake(p.velocity.x, 0.0);
-                    //         var resolutionHeight;
-                    //         if (tileIndx > 5) {
-                    //             resolutionHeight = -intersection.size.height;
-                    //             p.onGround = true;
-                    //         } else {
-                    //             resolutionHeight = intersection.size.height;
-                    //         }                        
-                    //         p.desiredPosition = cc.PointMake(p.desiredPosition.x, p.desiredPosition.y + resolutionHeight);
-                    //     } else {
-                    //         var resolutionWidth;
-                    //         if (tileIndx == 6 || tileIndx == 4) {
-                    //             resolutionWidth = intersection.size.width;
-                    //         } else {
-                    //             resolutionWidth = -intersection.size.width;
-                    //         }
-                    //         p.desiredPosition = cc.PointMake(p.desiredPosition.x + resolutionWidth , p.desiredPosition.y);
-                    //     }
-                    // }
-  
                 }
-
             }  
         }
         p.setPosition(p.desiredPosition);
@@ -347,6 +326,7 @@ var GameLayer = cc.Layer.extend({
     		var b = this.hero.getChildByTag(500);
     		var p = cc.PointMake(this.hero.getPosition().x - 3, this.hero.getPosition().y - 28);
     		b.setPosition(p);
+    		b.state = kShoot;
     		this.hero.removeChildByTag(500, true);
     		this.addChild(b, 1, 500);
 
@@ -375,6 +355,14 @@ var GameLayer = cc.Layer.extend({
     },
 
 });
+
+// GameLayer.create = function ()  {
+//     var sg = new GameScene();
+//     if (sg && sg.init()) {
+//         return sg;
+//     }
+//     return null;
+// };
 
 var GameScene = cc.Scene.extend({
     onEnter:function () {
