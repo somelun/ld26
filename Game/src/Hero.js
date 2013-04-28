@@ -63,7 +63,7 @@ var Hero = cc.Sprite.extend({
 
     	if (this.mightAsWellJump && this.onGround) {
     		this.velocity = cc.pAdd(this.velocity, jumpForce);
-    		//play audio effect
+    		cc.AudioEngine.getInstance().playEffect(s_jump);
     	} else if (!this.mightAsWellJump && this.velocity.y > jumpCutoff) {
     		this.velocity = cc.PointMake(this.velocity.x, jumpCutoff);
     	}

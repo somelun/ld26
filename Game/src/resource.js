@@ -14,6 +14,11 @@ var s_map_plist = "Game/res/level.tmx";
 //mp3
 var s_song = "Game/res/song.mp3"
 
+//effect
+var s_jump = "Game/res/jump.mp3";
+var s_expl = "Game/res/expl.mp3";
+var s_shoot = "Game/res/shoot.mp3";
+
 var g_ressources = [
 	//image
 	{type:"image", src:s_map},
@@ -29,4 +34,9 @@ var g_ressources = [
 
 	//mp3
 	{type:"bgm", src:s_song},
+
+	//effect
+    {type:"effect",src:s_jump},
+    {type:"effect",src:s_expl},
+    {type:"effect",src:s_shoot},
 ];

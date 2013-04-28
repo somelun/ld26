@@ -17,12 +17,24 @@ var SplashLayer = cc.Layer.extend({
 		var menu = cc.Menu.create(startGameee);
         this.addChild(menu, 102, 200);
         menu.setPosition(700, 100);
+
+        this.setKeyboardEnabled(true);
+
+        return true;
 	},
 
 	startGame:function() {
 		var scene = cc.Scene.create();
         scene.addChild(GameLayer.create());
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
+	},
+
+	onKeyDown:function(keyCode) {
+		switch(keyCode) {
+			case cc.KEY.space: {
+				this.startGame();
+			}
+		}
 	},
 
 });
