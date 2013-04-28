@@ -20,6 +20,7 @@ var Hero = cc.Sprite.extend({
     	this.mightAsWellJump = false;
     	this.velocity = cc.PointMake(0.0, 0.0);
 		this._isAnimationStarted = false;
+		this.lastMoveType = kMoveRight;
 	},
 
 	initPlayerAnimation:function (type) {
@@ -58,7 +59,7 @@ var Hero = cc.Sprite.extend({
     },
 
 	update:function(dt) {
-    	var jumpForce = cc.PointMake(0.0, 310.0);
+    	var jumpForce = cc.PointMake(0.0, 410.0);
     	var jumpCutoff = 250.0;
 
     	if (this.mightAsWellJump && this.onGround) {

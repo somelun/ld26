@@ -30,24 +30,24 @@ var GameLayer = cc.Layer.extend({
         this.hero = new Hero();
         this.hero.initWithSpriteFrameName("duck_1.png");
         this.hero.setPosition(cc.p(130, 300));
-        this.addChild(this.hero, 1);
+        this.addChild(this.hero, 1, 700);
         this.hero.initPlayerAnimation();
 
         this.baloon = new Baloon();
         this.baloon.initWithSpriteFrameName("baloon_1.png");
-        this.baloon.setPosition(cc.p(130, 400));
-        this.addChild(this.baloon, 10);
+        this.baloon.setPosition(cc.p(330, 100));
+        this.addChild(this.baloon, 10, 600);
         this.baloon.initPlayerAnimation();
 
-        this.bullet = new Bullet();
-        this.bullet.initWithSpriteFrameName("bullet.png");
-        this.bullet.setPosition(cc.p(30, 5));
-        this.hero.addChild(this.bullet, 10, 500);
+        var b = new Bullet();
+        b.initWithSpriteFrameName("bullet.png");
+        b.setPosition(cc.p(30, 5));
+        this.hero.addChild(b, 10, 500);
 
         var s = cc.Sprite.create();
         s.initWithSpriteFrameName("sun.png");
-        s.setPosition(cc.p(380, 600));
-        this.addChild(s, 2);
+        s.setPosition(cc.p(300, 500));
+        this.addChild(s, -1);
 
         this.setKeyboardEnabled(true);
 
@@ -68,14 +68,41 @@ var GameLayer = cc.Layer.extend({
         	this.baloon.runBezier();
         }
 
-        // if (this.hero.isBulletСharged) {
-        // 	//nothing but the blues
-        // } else {
-        // 	var b = this.getChildByTag(500);
-        // 	var r = this.hero.collisionBoundingBox();
-        // 	// var intersection = cc.rectIntersb.ection(b.collisionBoundingBox(), this.hero.collisionBoundingBox());
-        // 	// cc.log("x = " + intersection.x);
-        // }
+        if (this.bullet != null) {
+        	//bullet and hero
+        	var bulletRect = cc.RectMake(this.bullet.getPosition().x, this.bullet.getPosition().y, this.bullet.getContentSize().width, this.bullet.getContentSize().height);
+        	var baloonRect = cc.RectMake(this.baloon.getPosition().x, this.baloon.getPosition().y, this.baloon.getContentSize().width, this.baloon.getContentSize().height);
+        	var intersection = cc.rectIntersection(bulletRect, baloonRect);
+        	if (intersection.size.width > 0 && intersection.size.height > 0) {
+        		cc.AudioEngine.getInstance().playEffect(s_expl);
+    			this.removeChildByTag(600);
+    			this.bullet = null;
+    			return;
+        	}
+
+        	//bullet and hero
+        	var heroRect = cc.RectMake(this.hero.getPosition().x, this.hero.getPosition().y, this.hero.getContentSize().width, this.hero.getContentSize().height);
+        	intersection = cc.rectIntersection(bulletRect, heroRect);
+        	if (intersection.size.width > 0 && intersection.size.height > 0) {
+        		cc.AudioEngine.getInstance().playEffect(s_expl);
+    			this.removeChildByTag(700);
+    			this.bullet = null;
+    			cc.log("asdsadasdsadasdasdsadsadasdasd");
+    			return;
+        	}
+
+        }
+
+        //baloon and hero
+        var baloonRect = cc.RectMake(this.baloon.getPosition().x, this.baloon.getPosition().y, this.baloon.getContentSize().width, this.baloon.getContentSize().height);
+        var heroRect = cc.RectMake(this.hero.getPosition().x, this.hero.getPosition().y, this.hero.getContentSize().width, this.hero.getContentSize().height);
+        intersection = cc.rectIntersection(baloonRect, heroRect);
+        if (intersection.size.width > 0 && intersection.size.height > 0) {
+        		cc.AudioEngine.getInstance().playEffect(s_expl);
+    			this.removeChildByTag(700); 
+    			return;
+        }
+
     },
 
     //keys
@@ -329,6 +356,7 @@ var GameLayer = cc.Layer.extend({
     		b.state = kShoot;
     		this.hero.removeChildByTag(500, true);
     		this.addChild(b, 1, 500);
+    		this.bullet = b;
 
     		var shootPoint;
     		switch(this.hero.lastMoveType) {
@@ -345,10 +373,12 @@ var GameLayer = cc.Layer.extend({
     		var d = cc.pDistance(p, shootPoint);
     		var time = d / 200;
     		b.runAction(cc.Sequence.create(cc.MoveTo.create(time, shootPoint), cc.CallFunc.create(this.createNewBullet, this)));
+    		cc.AudioEngine.getInstance().playEffect(s_shoot);
     	}
     },
 
     createNewBullet:function() {
+    	this.bullet = null;
     	var b = this.getChildByTag(500);
     	b.setPosition(cc.p(100, 100));
     	b.state = kOnTheStage;
