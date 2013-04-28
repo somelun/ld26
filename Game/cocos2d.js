@@ -43,6 +43,7 @@
             'Game/src/Hero.js',
             'Game/src/Baloon.js',
             'Game/src/HUD.js',
+            'Game/src/Bullet.js',
         ]
     };
 

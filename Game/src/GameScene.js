@@ -5,7 +5,8 @@ var GameLayer = cc.Layer.extend({
     walls:null,
     hero:null,
     sky:null,
-    b:null,
+    baloon:null,
+    bullet:null,
     time:0,
     hud:null,
 
@@ -30,11 +31,16 @@ var GameLayer = cc.Layer.extend({
         this.addChild(this.hero, 1);
         this.hero.initPlayerAnimation();
 
-        this.b = new Baloon();
-        this.b.initWithSpriteFrameName("baloon_1.png");
-        this.b.setPosition(cc.p(130, 400));
-        this.addChild(this.b, 10);
-        this.b.initPlayerAnimation();
+        this.baloon = new Baloon();
+        this.baloon.initWithSpriteFrameName("baloon_1.png");
+        this.baloon.setPosition(cc.p(130, 400));
+        this.addChild(this.baloon, 10);
+        this.baloon.initPlayerAnimation();
+
+        this.bullet = new Bullet();
+        this.bullet.initWithSpriteFrameName("bullet.png");
+        this.bullet.setPosition(cc.p(30, 5));
+        this.hero.addChild(this.bullet, 10);
 
         var s = cc.Sprite.create();
         s.initWithSpriteFrameName("sun.png");
@@ -56,8 +62,8 @@ var GameLayer = cc.Layer.extend({
         this.checkForAndResolveCollisions(this.hero);
         this.setViewpointCenter(this.hero.getPosition());
 
-        if (!this.b._isMoveActivated) {
-        	this.b.runBezier();
+        if (!this.baloon._isMoveActivated) {
+        	this.baloon.runBezier();
         }
     },
 

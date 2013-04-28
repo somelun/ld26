@@ -56,6 +56,19 @@
                 <key>sourceSize</key>
                 <string>{64,64}</string>
             </dict>
+            <key>bullet.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{132,46},{23,16}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{1,1},{23,16}}</string>
+                <key>sourceSize</key>
+                <string>{25,18}</string>
+            </dict>
             <key>duck_1.png</key>
             <dict>
                 <key>frame</key>
@@ -131,7 +144,7 @@
             <key>size</key>
             <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:b439fabdb1ac09f936140d2098a8fc2f$</string>
+            <string>$TexturePacker:SmartUpdate:78a9efd3be30905f8506bde9806621c8$</string>
             <key>textureFileName</key>
             <string>objects.png</string>
         </dict>
