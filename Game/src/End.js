@@ -12,6 +12,21 @@ var EndLayer = cc.Layer.extend({
 
 		return true;
 	},
+
+	onKeyDown:function(keyCode) {
+		switch(keyCode) {
+			case cc.KEY.r: {
+				this.startGame();
+			}
+		}
+	},
+
+	startGame:function() {
+		var scene = cc.Scene.create();
+        scene.addChild(GameLayer.create());
+        cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
+	},
+
 });
 
 EndLayer.create = function ()  {
