@@ -356,13 +356,13 @@ var GameLayer = cc.Layer.extend({
 
 });
 
-// GameLayer.create = function ()  {
-//     var sg = new GameScene();
-//     if (sg && sg.init()) {
-//         return sg;
-//     }
-//     return null;
-// };
+GameLayer.create = function ()  {
+    var sg = new GameScene();
+    if (sg && sg.init()) {
+        return sg;
+    }
+    return null;
+};
 
 var GameScene = cc.Scene.extend({
     onEnter:function () {

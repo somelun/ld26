@@ -20,9 +20,9 @@ var SplashLayer = cc.Layer.extend({
 	},
 
 	startGame:function() {
-	// 	var scene = cc.Scene.create();
- //        scene.addChild(GameScene.create());
- //        cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
+		var scene = cc.Scene.create();
+        scene.addChild(GameLayer.create());
+        cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
 	},
 
 });
