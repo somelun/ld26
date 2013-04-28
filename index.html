@@ -19,10 +19,56 @@
         }
     </style>
 </head>
-<body style="padding:0; margin: 0; background: #000;">
-<div style="text-align: center;">
-    <canvas id="gameCanvas" width="960" height="640"></canvas>
+<body style="padding:0; margin: 0; background: #ffffff;">
+    <center>
+<H4>Duck vs. Balloon</H4>
+A Game Created in 48 hours for Ludum Dare 25 (Solo) theme : Minimalism<br>
+By Sasha Koroschenko<br>
+Our web site: <a href="http://lemontree-studio.com">Lemon Tree</a><br>
+Please Rate our Game here: <a href="http://www.ludumdare.com/compo/ludum-dare-26/?action=preview&uid=15958">Duck vs. Balloon</a>
+</center><br>
+<!--<div style="text-align: center;">
+    <canvas id="gameCanvas" width="960" height="640" style="border: #333300 1px solid; background: #000000;"></canvas>
+</div>-->
+<div style="width: 960px;height: 640px;margin: 0 auto;">
+    <canvas id="gameCanvas" width="960" height="640" style="border: #333300 1px solid; background: #000000;"></canvas>
 </div>
+<div id="cou" style="width:960px;margin: 0 auto;"></div>
 </body>
 </html>
 <script src="Game/cocos2d.js"></script>
+
+<br><center><h3>There is no preloader. If you see black screen, please, wait a little bit!</H3></center>
+<br><center>
+Controls:<br>
+Arrows Move Around<br>
+Space to jump<br>
+X to fire<br>
+</center>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter21129730 = new Ya.Metrika({id:21129730,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/21129730" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
