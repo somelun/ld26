@@ -64,42 +64,44 @@ var GameLayer = cc.Layer.extend({
         this.checkForAndResolveCollisions(this.hero);
         this.setViewpointCenter(this.hero.getPosition());
 
-        if (!this.baloon._isMoveActivated) {
-        	this.baloon.runBezier();
-        }
+        // if (!this.baloon._isMoveActivated) {
+        // 	this.baloon.runBezier();
+        // }
 
         if (this.bullet != null) {
-        	//bullet and hero
+        	//bullet and balloon
         	var bulletRect = cc.RectMake(this.bullet.getPosition().x, this.bullet.getPosition().y, this.bullet.getContentSize().width, this.bullet.getContentSize().height);
         	var baloonRect = cc.RectMake(this.baloon.getPosition().x, this.baloon.getPosition().y, this.baloon.getContentSize().width, this.baloon.getContentSize().height);
         	var intersection = cc.rectIntersection(bulletRect, baloonRect);
         	if (intersection.size.width > 0 && intersection.size.height > 0) {
         		cc.AudioEngine.getInstance().playEffect(s_expl);
-    			this.removeChildByTag(600);
+        		this.baloon.stopPlayerAnimation();
+        		this.baloon.playBoomAnimation();
+        		this.runAction(cc.Sequence.create(cc.DelayTime.create(0.4), cc.CallFunc.create(this.removeBaloon, this)));
     			this.bullet = null;
     			return;
         	}
 
-        	//bullet and hero
-        	var heroRect = cc.RectMake(this.hero.getPosition().x, this.hero.getPosition().y, this.hero.getContentSize().width, this.hero.getContentSize().height);
-        	intersection = cc.rectIntersection(bulletRect, heroRect);
-        	if (intersection.size.width > 0 && intersection.size.height > 0) {
-        		if (this.bullet.state == kShoot) {
-        			cc.AudioEngine.getInstance().playEffect(s_expl);
-	    			this.removeChildByTag(700);
-	    			this.bullet = null;
-	    			return;
-        		} else if (this.bullet.state == kOnTheStage) {
-        			var b = this.bullet;
-        			this.removeChildByTag(500);
-        			this.bullet = null;
-        			this.hero.removeAllChildrenWithCleanup(true);
-        			this.hero.addChild(b, 10, 500);
-        			b.setPosition(cc.p(30, 5));
-        			this.hero.isBulletСharged = true;
-        			return;
-        		}
-        	}
+        // 	//bullet and hero
+        // 	var heroRect = cc.RectMake(this.hero.getPosition().x, this.hero.getPosition().y, this.hero.getContentSize().width, this.hero.getContentSize().height);
+        // 	intersection = cc.rectIntersection(bulletRect, heroRect);
+        // 	if (intersection.size.width > 0 && intersection.size.height > 0) {
+        // 		if (this.bullet.state == kShoot) {
+        // 			cc.AudioEngine.getInstance().playEffect(s_expl);
+	    			// this.removeChildByTag(700);
+	    			// this.bullet = null;
+	    			// return;
+        // 		} else if (this.bullet.state == kOnTheStage) {
+        // 			var b = this.bullet;
+        // 			this.removeChildByTag(500);
+        // 			this.bullet = null;
+        // 			this.hero.removeAllChildrenWithCleanup(true);
+        // 			this.hero.addChild(b, 10, 500);
+        // 			b.setPosition(cc.p(30, 5));
+        // 			this.hero.isBulletСharged = true;
+        // 			return;
+        // 		}
+        // 	}
 
         }
 
@@ -113,6 +115,10 @@ var GameLayer = cc.Layer.extend({
     			return;
         }
 
+    },
+
+    removeBaloon:function() {
+    	this.removeChildByTag(600);
     },
 
     //keys

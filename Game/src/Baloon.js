@@ -1,6 +1,7 @@
 
 var Baloon = cc.Sprite.extend({
 	_flyAnimation:null,
+    _booomAnimation:null,
 	_isAnimationStarted:null,
     _isMoveActivated:false,
 
@@ -26,8 +27,30 @@ var Baloon = cc.Sprite.extend({
         // animate
         this._flyAnimation = cc.Animation.create(animFrames, 0.1);
 
+
+        var animFrames2 = [];
+        var frame4 = cc.SpriteFrameCache.getInstance().getSpriteFrame("bexpl_1.png");
+        var frame5 = cc.SpriteFrameCache.getInstance().getSpriteFrame("bexpl_2.png");
+        var frame6 = cc.SpriteFrameCache.getInstance().getSpriteFrame("bexpl_3.png");
+        var frame7 = cc.SpriteFrameCache.getInstance().getSpriteFrame("bexpl_4.png");       
+
+        animFrames2.push(frame4);
+        animFrames2.push(frame5);
+        animFrames2.push(frame6);
+        animFrames2.push(frame7);
+
+        this._booomAnimation = cc.Animation.create(animFrames2, 0.1);
+
         this.playPayerAnimation();
-        this.runBezier();
+        // this.runBezier();
+    },
+
+    playBoomAnimation:function() {
+        if(this._isAnimationStarted == false) {
+            this._isAnimationStarted = true;
+            var animate = cc.Animate.create(this._booomAnimation);
+            this.runAction(animate);
+        }
     },
 
     playPayerAnimation:function () {
