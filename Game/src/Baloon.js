@@ -42,7 +42,7 @@ var Baloon = cc.Sprite.extend({
         this._booomAnimation = cc.Animation.create(animFrames2, 0.1);
 
         this.playPayerAnimation();
-        // this.runBezier();
+        this.runBezier();
     },
 
     playBoomAnimation:function() {

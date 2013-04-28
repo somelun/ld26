@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+cc.score = 0;
+
 cc.g_NumberOfDraws = 0;
 
 //Possible OpenGL projections used by director

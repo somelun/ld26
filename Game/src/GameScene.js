@@ -63,9 +63,9 @@ var GameLayer = cc.Layer.extend({
         this.checkForAndResolveCollisions(this.hero);
         this.setViewpointCenter(this.hero.getPosition());
 
-        // if (!this.baloon._isMoveActivated) {
-        // 	this.baloon.runBezier();
-        // }
+        if (!this.baloon._isMoveActivated) {
+        	this.baloon.runBezier();
+        }
 
         if (this.bullet != null) {
         	//bullet and balloon
@@ -131,6 +131,7 @@ var GameLayer = cc.Layer.extend({
     showGameOver:function() {
     	var scene = cc.Scene.create();
         scene.addChild(EndLayer.create());
+        cc.Director.getInstance().score = this.time;
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
     },
 

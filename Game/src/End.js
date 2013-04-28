@@ -8,6 +8,11 @@ var EndLayer = cc.Layer.extend({
 		// s.setPosition(480, 320);
 		this.addChild(s);
 
+		var score = cc.Director.getInstance().score;
+		this.label = cc.LabelTTF.create("" + Number(score).toFixed(2), "Arial", 36);
+        this.label.setPosition(cc.p(750, 150));
+        this.addChild(this.label, 5);
+
 		this.setKeyboardEnabled(true);
 
 		return true;
