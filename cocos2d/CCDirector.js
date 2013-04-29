@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-cc.score = 0;
+cc.score = 0;   //sorry, guys, it's my hack
 
 cc.g_NumberOfDraws = 0;
 

@@ -188,9 +188,6 @@ var GameLayer = cc.Layer.extend({
 
     //tiles
     tileCoordForPosition:function (position) {
-        // if (gameOver) {
-        //     return;
-        // }
         
         var x = Math.floor(position.x / this.map.getTileSize().width);
         var levelHeightInPixels = this.map.getMapSize().height * this.map.getTileSize().height;
@@ -199,9 +196,6 @@ var GameLayer = cc.Layer.extend({
     },
 
     tileRectFromTileCoords:function (tileCoords) {
-        // if (gameOver) {
-        //     return;
-        // }
 
         var levelHeightInPixels = this.map.getMapSize().height * this.map.getTileSize().height;
         var origin = cc.PointMake(tileCoords.x * this.map.getTileSize().width, levelHeightInPixels - ((tileCoords.y + 1) * this.map.getTileSize().height));
@@ -209,9 +203,7 @@ var GameLayer = cc.Layer.extend({
     },
 
     getSurroundingTilesAtPosition:function (p, layer) {
-        // if (gameOver) {
-        //     return;
-        // }
+        
         var position = p.getPosition();
         var plPos = this.tileCoordForPosition(position);    
         var gids = [];
@@ -259,9 +251,6 @@ var GameLayer = cc.Layer.extend({
     },
 
     checkForAndResolveCollisions:function (p) {
-        // if (gameOver) {
-        //     return;
-        // }
 
         var tiles = this.getSurroundingTilesAtPosition(p, this.walls);
         p.onGround = false;
@@ -364,9 +353,7 @@ var GameLayer = cc.Layer.extend({
     },
 
     setViewpointCenter:function (position) {
-        // if(gameOver) {
-        //     return;
-        // }
+
         var winSize = cc.Director.getInstance().getWinSize();
     
         var x = Math.max(position.x, winSize.width / 2);

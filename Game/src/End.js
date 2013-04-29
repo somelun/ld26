@@ -5,7 +5,6 @@ var EndLayer = cc.Layer.extend({
 
 		var s = cc.Sprite.create(s_end);
 		s.setAnchorPoint(cc.PointMake(0.0, 0.0));
-		// s.setPosition(480, 320);
 		this.addChild(s);
 
 		var score = cc.Director.getInstance().score;
